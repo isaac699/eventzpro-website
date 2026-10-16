@@ -322,9 +322,7 @@ main:focus { outline: none; }
   background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg);
   overflow: hidden; transition: transform .35s var(--ease), box-shadow .35s, border-color .35s;
 }
-.service-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform .4s var(--ease); }
 .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); border-color: transparent; }
-.service-card:hover::before { transform: scaleX(1); }
 .service-card-num { position: absolute; top: 1.4rem; right: 1.6rem; font-family: var(--font-head); font-weight: 800; font-size: 2.6rem; line-height: 1; color: #eeede6; transition: color .3s; }
 .service-card:hover .service-card-num { color: var(--amber-100); }
 .service-card-icon { display: grid; place-items: center; width: 56px; height: 56px; margin-bottom: 1.4rem; border-radius: 16px; background: var(--charcoal); color: var(--amber); }
