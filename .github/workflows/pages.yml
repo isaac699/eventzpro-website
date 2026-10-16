@@ -28,11 +28,22 @@ jobs:
       - name: Lint PHP
         run: find app public scripts -name '*.php' -print0 | xargs -0 -n1 php -l
 
+      # With a custom domain (repository variable PAGES_CUSTOM_DOMAIN, e.g. www.example.com)
+      # the site is served from the domain root; otherwise from /<repo-name>/ on github.io.
       - name: Build static preview
         env:
-          APP_BASE_PATH: /${{ github.event.repository.name }}
-          APP_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
-        run: php scripts/export-static.php _site
+          CUSTOM_DOMAIN: ${{ vars.PAGES_CUSTOM_DOMAIN }}
+          REPO: ${{ github.event.repository.name }}
+          OWNER: ${{ github.repository_owner }}
+        run: |
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            export APP_BASE_PATH="" APP_URL="https://$CUSTOM_DOMAIN"
+          else
+            export APP_BASE_PATH="/$REPO" APP_URL="https://$OWNER.github.io/$REPO"
+          fi
+          echo "Building for $APP_URL"
+          php scripts/export-static.php _site
+          if [ -n "$CUSTOM_DOMAIN" ]; then echo "$CUSTOM_DOMAIN" > _site/CNAME; fi
 
       - uses: actions/configure-pages@v5
 
