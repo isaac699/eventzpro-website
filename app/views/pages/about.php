@@ -32,12 +32,10 @@ $years = years_in_business();
 <section class="section section--soft">
     <div class="container vm-grid">
         <article class="vm-card reveal">
-            <span class="vm-card-icon"><?= icon('eye') ?></span>
             <p class="eyebrow">Vision</p>
             <p class="vm-card-text"><?= e($company['vision']) ?></p>
         </article>
         <article class="vm-card vm-card--dark reveal">
-            <span class="vm-card-icon"><?= icon('target') ?></span>
             <p class="eyebrow eyebrow--light">Mission</p>
             <p class="vm-card-text"><?= e($company['mission']) ?></p>
         </article>

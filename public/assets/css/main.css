@@ -466,7 +466,7 @@ main:focus { outline: none; }
 
 /* ---------- About ---------- */
 .milestones { display: grid; gap: 1rem; }
-.milestones li { position: relative; padding: 1.4rem 1.5rem 1.4rem 1.6rem; background: var(--white); border: 1px solid var(--line); border-left: 4px solid var(--amber); border-radius: var(--radius); }
+.milestones li { position: relative; padding: 1.4rem 1.5rem 1.4rem 1.6rem; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); }
 .milestones span { font-family: var(--font-head); font-size: .78rem; font-weight: 700; text-transform: uppercase; color: var(--amber-700); }
 .milestones strong { display: block; font-family: var(--font-head); font-size: 1.12rem; color: var(--charcoal); margin: .15rem 0 .3rem; }
 .milestones p { margin: 0; color: var(--muted); font-size: .94rem; }
@@ -474,8 +474,6 @@ main:focus { outline: none; }
 .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
 .vm-card { position: relative; padding: clamp(2rem, 4vw, 3rem); background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
 .vm-card--dark { background: var(--charcoal) var(--hex-pattern); border-color: transparent; }
-.vm-card-icon { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--amber); color: var(--charcoal); margin-bottom: 1.5rem; }
-.vm-card-icon .icon { width: 26px; height: 26px; }
 .vm-card-text { font-family: var(--font-head); font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 600; line-height: 1.45; color: var(--charcoal); margin: 0; }
 .vm-card--dark .vm-card-text { color: var(--white); }
 
