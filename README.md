@@ -58,7 +58,9 @@ To upgrade Bootstrap: change the version in `package.json`, run `npm install`, c
 
 **Live site (Hostinger, Apache/LiteSpeed + PHP):** upload the *contents* of `public/` to `public_html/`, and upload `app/` next to `public_html` (one level up). Copy `app/.env.example` to `app/.env` and set `APP_URL` and `MAIL_TO`. Make `app/storage/*` writable.
 
-**Review preview (GitHub Pages):** pushes to `main` run `.github/workflows/pages.yml`, which lints the PHP, exports static HTML and deploys it. One-time setup: *Settings → Pages → Source: GitHub Actions*. The contact form is disabled in the preview because Pages cannot run PHP.
+**Developer preview (Render, full PHP):** `render.yaml` + `Dockerfile` run the real app (PHP 8.4 + Apache, only `public/` served) on Render's free plan, so the contact form works. In Render: *New → Blueprint → select this repo → Apply*. Every push to `main` redeploys. The preview sends `X-Robots-Tag: noindex`; mail is off (Render has no mail server), and enquiries are kept in `app/storage/messages` until the next deploy. The free plan sleeps after 15 minutes idle, so the first visit afterwards takes ~30–60 s.
+
+**Static review copy (GitHub Pages):** pushes to `main` run `.github/workflows/pages.yml`, which lints the PHP, exports static HTML and deploys it. One-time setup: *Settings → Pages → Source: GitHub Actions*. The contact form is disabled in the preview because Pages cannot run PHP.
 
 To build the preview locally:
 

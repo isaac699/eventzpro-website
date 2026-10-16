@@ -1,0 +1,17 @@
+.git
+.github
+node_modules
+dist
+_site
+images
+EVENTZPRO  Profile.pdf
+index.php
+app/.env
+app/storage/messages/*.jsonl
+app/storage/ratelimit/*.json
+app/storage/logs/*.log
+public/assets/vendor/**/*.map
+*.md
+Dockerfile
+.dockerignore
+render.yaml

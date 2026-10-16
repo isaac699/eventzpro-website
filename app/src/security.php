@@ -37,6 +37,9 @@ function send_security_headers(): void
     header('Referrer-Policy: strict-origin-when-cross-origin');
     header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()');
     header('Cross-Origin-Opener-Policy: same-origin');
+    if (env('APP_NOINDEX') === 'true') {
+        header('X-Robots-Tag: noindex, nofollow'); // preview hosting (e.g. Render): keep out of search results
+    }
     if (is_https()) {
         header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
     }

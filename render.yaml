@@ -1,0 +1,25 @@
+# Render Blueprint: developer preview hosting (free plan).
+# The real site goes to Hostinger; this runs the full PHP app so the contact form works too.
+services:
+  - type: web
+    name: eventzpro-website
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /robots.txt
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: TRUST_PROXY
+        value: "true"
+      - key: APP_URL
+        value: https://eventzpro-website.onrender.com
+      # Keep the preview out of search engines
+      - key: APP_NOINDEX
+        value: "true"
+      # Render has no mail server; enquiries are stored in app/storage/messages instead
+      - key: MAIL_ENABLED
+        value: "false"

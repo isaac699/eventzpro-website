@@ -7,10 +7,11 @@ DirectoryIndex index.php
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Force HTTPS in production (skipped on localhost)
+    # Force HTTPS in production (skipped on localhost and for the /robots.txt health check)
     RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
+    RewriteCond %{REQUEST_URI} !^/robots\.txt$
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Block dotfiles (except .well-known) and backup/source files
