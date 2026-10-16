@@ -1,0 +1,22 @@
+# Secrets & runtime data
+app/.env
+app/storage/messages/*
+app/storage/ratelimit/*
+app/storage/logs/*
+!app/storage/**/.gitignore
+
+# Dependencies & build output (Bootstrap is committed in public/assets/vendor)
+node_modules/
+dist/
+_site/
+
+# Original source material (optimised copies live in public/assets)
+/images/
+/EVENTZPRO  Profile.pdf
+/index.php
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

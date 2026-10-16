@@ -1,0 +1,14 @@
+{
+  "name": "eventzpro-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eventzpro Consult Ltd. corporate website (PHP 8, Bootstrap 5, self-hosted assets).",
+  "scripts": {
+    "vendor": "node scripts/copy-vendor.js",
+    "postinstall": "node scripts/copy-vendor.js",
+    "export": "php scripts/export-static.php"
+  },
+  "dependencies": {
+    "bootstrap": "5.3.3"
+  }
+}

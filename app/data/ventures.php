@@ -1,0 +1,71 @@
+<?php
+/** Ongoing own projects / strategic business units (profile pp. 35–49). */
+return [
+    [
+        'slug'     => 'cassava',
+        'letter'   => 'A',
+        'title'    => 'Dry Cassava Processing SBU',
+        'subtitle' => 'Green business model · Adeiso & Dambai',
+        'image'    => 'ventures/cassava-factory-render.webp',
+        'gallery'  => ['ventures/cassava-drying.webp', 'ventures/cassava-chips.webp', 'ventures/cassava-harvest.webp'],
+        'summary'  => 'Two independent, solar-powered cassava plants in Ghana\'s cassava-growing hubs, producing gari, dried chips, high-quality flour, starch and biochar with zero waste.',
+        'mantra'   => 'Reduce, Reuse, Recycle',
+        'goals' => [
+            'Set up two independent dry cassava plants in selected cassava-growing hubs that secure an all-year-round supply of fresh cassava.',
+            'Consistently produce a minimum of 1,000 MT of dried cassava each month across both plants.',
+            'Run a highly green operation: solar power, with solid waste recycled into biochar and liquid waste into reusable forms.',
+            'Institute a GMP-compliant factory management system to achieve ISO certification by the 8th year of operation.',
+            'Maintain a minimum gross profit margin of 29% at all times.',
+        ],
+        'hubs' => [
+            'Dambai plant (semi-automated)' => ['Pusiga', 'Bimbila', 'Wulensi', 'Damanko', 'Kpasa', 'Kpandai', 'Tutukpene', 'Nkwanta', 'Dambai'],
+            'Adeiso plant (semi & fully automated)' => ['Adeiso', 'Obrachere', 'Obrayeko', 'Bawjiase', 'Adembra', 'Danso', 'Kwanyako', 'Breku'],
+        ],
+        'products' => [
+            ['name' => 'Pharmaceutical-grade starch', 'revenue' => 6.5, 'margin' => 40, 'text' => 'High-purity starch for a pharmaceutical starch market valued at $10 billion.'],
+            ['name' => 'Cassava flour (HQCF)', 'revenue' => 4.3, 'margin' => 35, 'text' => 'High-quality gluten-free flour for bakers, in a market growing 10% a year.'],
+            ['name' => 'Dried cassava chips', 'revenue' => 2.1, 'margin' => 30, 'text' => 'Sustainably sourced chips for a $150 billion global food industry.'],
+            ['name' => 'Biochar', 'revenue' => 1.4, 'margin' => 50, 'text' => 'Soil amendment made from cassava waste, with carbon sequestration benefits.'],
+            ['name' => 'Fortified & flavoured gari', 'revenue' => 1.0, 'margin' => 28, 'revenue_label' => '$0.8M to $1.2M', 'margin_label' => '25 to 30%', 'text' => 'GHS 10 to 15 million (about USD 0.8 to 1.2 million) a year for West African and niche export markets.'],
+        ],
+        'impact' => [
+            ['value' => '400+', 'label' => 'Jobs created', 'note' => '60+ staff (60% female) · 340+ casuals (70% female)'],
+            ['value' => '5,000', 'label' => 'Smallholder farms', 'note' => 'Given a permanent, secured market'],
+            ['value' => '1,000 MT', 'label' => 'Dried cassava / month', 'note' => 'Minimum target output'],
+            ['value' => '0', 'label' => 'Waste', 'note' => 'Solar-powered, reduced CO₂ emissions'],
+        ],
+    ],
+    [
+        'slug'     => 'hotel',
+        'letter'   => 'B',
+        'title'    => '3-Star Hotel, Duayaw Nkwanta',
+        'subtitle' => 'Hospitality · Ahafo Region',
+        'image'    => 'ventures/hotel-render-aerial.webp',
+        'gallery'  => ['ventures/hotel-render-front.webp'],
+        'summary'  => 'A 3-star hotel serving Newmont Gold Ghana Limited and third-party contractors at the Tano mining project.',
+        'phases' => [
+            ['title' => 'Phase one', 'items' => ['30 rooms: standard deluxe, executive and presidential suites', 'Swimming pool & gym', '24-hour restaurant service', 'Large lobby', 'Conference room']],
+            ['title' => 'Phase two', 'items' => ['An additional 70 rooms']],
+        ],
+    ],
+    [
+        'slug'     => 'newmont',
+        'letter'   => 'C',
+        'title'    => 'Newmont Resettlement Contracts',
+        'subtitle' => 'Construction · Tano North Municipality',
+        'image'    => 'ventures/newmont-resettlement-house.webp',
+        'gallery'  => ['ventures/newmont-team.webp', 'ventures/newmont-foundations.webp', 'ventures/newmont-earthworks.webp'],
+        'summary'  => 'Delivered through our fully owned subsidiary, PCL Engineering & Construction Limited.',
+        'scope'    => ['Supply of building materials', 'Construction of resettlement houses', 'Earthworks, roads and gutters'],
+    ],
+    [
+        'slug'     => 'fmcg',
+        'letter'   => 'D',
+        'title'    => 'FMCG Distribution',
+        'subtitle' => 'Fast-moving consumer goods',
+        'image'    => 'ventures/fmcg-beverages.webp',
+        'gallery'  => ['ventures/serwaa-sardines.webp', 'ventures/serwaa-mackerel.webp'],
+        'summary'  => 'Distribution of fast-moving consumer products, including beverages and the Serwaa range of canned sardines and mackerel.',
+        'scope'    => ['Beverages', 'Sardines and mackerel'],
+    ],
+];
