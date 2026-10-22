@@ -7,6 +7,7 @@ $ventures = content('ventures');
 $team = content('team');
 $years = years_in_business();
 $featured = array_slice($projects, 0, 6);
+$ceo = $team[0];
 ?>
 <!-- HERO -->
 <section class="hero">
@@ -62,27 +63,33 @@ $featured = array_slice($projects, 0, 6);
 
 <!-- ABOUT -->
 <section class="section">
-    <div class="container split">
+    <div class="container split split--about">
         <div class="split-media reveal">
-            <div class="media-stack">
-                <img class="media-stack-main" src="<?= e(img('services/boardroom-strategy.webp')) ?>" alt="Consultant presenting strategy to a client team" loading="lazy" width="930" height="450">
-                <img class="media-stack-inset" src="<?= e(img('services/agribusiness-field.webp')) ?>" alt="Eventzpro consultant inspecting a maize farm" loading="lazy" width="804" height="600">
-                <div class="badge-years"><strong><?= e($years) ?>+</strong><span>years of<br>impact</span></div>
+            <div class="collage">
+                <img class="collage-main" src="<?= e(img('services/boardroom-strategy.webp')) ?>" alt="Consultant presenting strategy to a client team" loading="lazy" width="930" height="450">
+                <img class="collage-side" src="<?= e(img('ventures/newmont-site-lead.webp')) ?>" alt="Eventzpro site lead on the Newmont resettlement project" loading="lazy" width="855" height="700">
+                <div class="collage-years">
+                    <strong><?= e($years) ?><sup>+</sup></strong>
+                    <span>years building Ghanaian enterprises</span>
+                </div>
             </div>
         </div>
         <div class="split-copy reveal">
             <p class="eyebrow">Who we are</p>
             <h2 class="section-title">A Ghanaian consulting group built to make enterprises work.</h2>
             <p class="lead">Registered in <?= e($company['registered']) ?> and incorporated as a limited liability company in <?= e($company['incorporated']) ?>, Eventzpro has grown from an organizational development practice into a multi-sector group with its own industrial ventures.</p>
-            <p><?= e($company['mission']) ?></p>
-            <ul class="checklist checklist--2col">
-                <?php foreach ($company['operating_areas'] as $area): ?>
-                    <li><?= icon('check') ?><?= e($area) ?></li>
+            <ul class="area-list">
+                <?php foreach ($company['operating_areas'] as $i => $area): ?>
+                    <li><span><?= sprintf('%02d', $i + 1) ?></span><?= e($area) ?></li>
                 <?php endforeach; ?>
             </ul>
-            <div class="btn-row">
-                <a class="btn btn--dark" href="<?= e(url('about')) ?>">More about us <?= icon('arrow-right') ?></a>
-                <a class="btn btn--link" href="<?= e(asset('docs/eventzpro-company-profile.pdf')) ?>" download><?= icon('download') ?> Download company profile</a>
+            <div class="signoff">
+                <?= partial('avatar', ['member' => $ceo]) ?>
+                <div>
+                    <strong><?= e($ceo['name']) ?></strong>
+                    <small><?= e($ceo['role']) ?>, leading the firm since <?= e($company['founded']) ?></small>
+                </div>
+                <a class="btn btn--dark" href="<?= e(url('about')) ?>">Our story <?= icon('arrow-right') ?></a>
             </div>
         </div>
     </div>
@@ -94,18 +101,21 @@ $featured = array_slice($projects, 0, 6);
         <div class="section-head">
             <div>
                 <p class="eyebrow">What we do</p>
-                <h2 class="section-title">Six practice areas. One accountable partner.</h2>
+                <h2 class="section-title">Six practice areas, one accountable partner</h2>
             </div>
             <p class="section-head-text">From strategy rooms to factory floors and mine sites, we bring the expertise, networks and project discipline to deliver measurable results.</p>
         </div>
         <div class="service-grid">
             <?php foreach ($services as $s): ?>
                 <a class="service-card reveal" href="<?= e(url('services/' . $s['slug'])) ?>">
-                    <span class="service-card-num"><?= e($s['number']) ?></span>
-                    <span class="service-card-icon"><?= icon($s['icon']) ?></span>
-                    <h3 class="service-card-title"><?= e($s['short']) ?></h3>
-                    <p><?= e($s['summary']) ?></p>
-                    <span class="service-card-more">Learn more <?= icon('arrow-up-right') ?></span>
+                    <span class="service-card-media">
+                        <img src="<?= e(img($s['image'])) ?>" alt="" loading="lazy">
+                    </span>
+                    <span class="service-card-body">
+                        <h3 class="service-card-title"><?= e($s['short']) ?></h3>
+                        <p><?= e($s['summary']) ?></p>
+                        <span class="service-card-more">Learn more <?= icon('arrow-up-right') ?></span>
+                    </span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -113,25 +123,32 @@ $featured = array_slice($projects, 0, 6);
 </section>
 
 <!-- STATS -->
-<section class="stats">
-    <div class="hex-field hex-field--faint" aria-hidden="true"></div>
-    <div class="container stats-grid">
-        <?php foreach ($company['stats'] as $stat): ?>
-            <div class="stat reveal">
-                <p class="stat-value"><?php if ($stat['prefix']): ?><span class="stat-unit"><?= e(trim($stat['prefix'])) ?></span><?php endif; ?><span data-count="<?= e($stat['value']) ?>"><?= e(number_format($stat['value'])) ?></span><?= e($stat['suffix']) ?></p>
-                <p class="stat-label"><?= e($stat['label']) ?></p>
-            </div>
-        <?php endforeach; ?>
+<section class="stats" aria-label="Eventzpro in numbers">
+    <div class="container">
+        <div class="stats-head">
+            <p class="stats-title">The numbers behind the work</p>
+            <p class="stats-note">Figures from the Eventzpro Group Profile</p>
+        </div>
+        <div class="stats-grid">
+            <?php foreach ($company['stats'] as $stat): ?>
+                <div class="stat reveal">
+                    <p class="stat-value"><?php if ($stat['prefix']): ?><span class="stat-unit"><?= e(trim($stat['prefix'])) ?></span><?php endif; ?><span data-count="<?= e($stat['value']) ?>"><?= e(number_format($stat['value'])) ?></span><?= e($stat['suffix']) ?></p>
+                    <p class="stat-label"><?= e($stat['label']) ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
 
 <!-- PROCESS -->
-<section class="section">
+<section class="section section--dark section--process">
     <div class="container">
-        <div class="section-head section-head--center">
-            <p class="eyebrow">How we work</p>
-            <h2 class="section-title">From raw idea to a running enterprise</h2>
-            <p class="section-head-text">A proven path we have walked with factories, farms and social enterprises, under a strict oath of professional secrecy.</p>
+        <div class="section-head">
+            <div>
+                <p class="eyebrow eyebrow--light">How we work</p>
+                <h2 class="section-title section-title--light">From raw idea to a running enterprise</h2>
+            </div>
+            <p class="section-head-text section-head-text--light">A proven path we have walked with factories, farms and social enterprises, under a strict oath of professional secrecy.</p>
         </div>
         <ol class="process">
             <?php foreach ($company['process'] as $i => $step): ?>
@@ -214,7 +231,6 @@ $featured = array_slice($projects, 0, 6);
             <?php foreach ($ventures as $i => $v): ?>
                 <a class="venture-card reveal<?= $i === 0 ? ' venture-card--feature' : '' ?>" href="<?= e(url('ventures#' . $v['slug'])) ?>">
                     <img src="<?= e(img($v['image'])) ?>" alt="" loading="lazy">
-                    <span class="venture-card-letter"><?= e($v['letter']) ?></span>
                     <span class="venture-card-body">
                         <small><?= e($v['subtitle']) ?></small>
                         <strong><?= e($v['title']) ?></strong>
@@ -234,7 +250,7 @@ $featured = array_slice($projects, 0, 6);
                 <p class="eyebrow">Leadership</p>
                 <h2 class="section-title">Experienced hands at the helm</h2>
             </div>
-            <a class="btn btn--outline" href="<?= e(url('leadership')) ?>">Meet the board <?= icon('arrow-right') ?></a>
+            <a class="btn btn--outline" href="<?= e(url('leadership')) ?>">Meet the team <?= icon('arrow-right') ?></a>
         </div>
         <div class="team-grid">
             <?php foreach ($team as $m): ?>

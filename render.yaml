@@ -20,6 +20,10 @@ services:
       # Keep the preview out of search engines
       - key: APP_NOINDEX
         value: "true"
-      # Render has no mail server; enquiries are stored in app/storage/messages instead
+      # Render has no mail server; enquiries are still saved and visible in the admin panel
       - key: MAIL_ENABLED
         value: "false"
+      # Setup key for /admin/setup (see its value in the Render dashboard). The free plan's disk
+      # is wiped on every deploy, so the SQLite database and admin users reset each time.
+      - key: ADMIN_SETUP_TOKEN
+        generateValue: true

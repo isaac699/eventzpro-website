@@ -1,8 +1,8 @@
 <?php $team = content('team'); ?>
 <?= partial('page-hero', [
     'eyebrow' => 'Leadership',
-    'title'   => 'Board of Directors',
-    'lead'    => 'Finance, strategy, HR, logistics and supply-chain leaders who bring decades of combined experience to every client engagement.',
+    'title'   => 'Our leadership team',
+    'lead'    => 'Leaders and professionals in finance, strategy, HR, operations and logistics who bring decades of combined experience to every client engagement.',
     'crumbs'  => ['Leadership' => null],
 ]) ?>
 

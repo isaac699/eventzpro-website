@@ -14,7 +14,7 @@ $maxRevenue = max(array_column($cassava['products'], 'revenue'));
 <nav class="subnav" aria-label="Business units">
     <div class="container subnav-inner">
         <?php foreach ($ventures as $v): ?>
-            <a href="#<?= e($v['slug']) ?>"><span><?= e($v['letter']) ?></span><?= e($v['title']) ?></a>
+            <a href="#<?= e($v['slug']) ?>"><?= e($v['title']) ?></a>
         <?php endforeach; ?>
     </div>
 </nav>
@@ -24,7 +24,7 @@ $maxRevenue = max(array_column($cassava['products'], 'revenue'));
     <div class="container">
         <div class="split split--top">
             <div class="split-copy reveal">
-                <p class="eyebrow">Unit <?= e($cassava['letter']) ?> · <?= e($cassava['subtitle']) ?></p>
+                <p class="eyebrow"><?= e($cassava['subtitle']) ?></p>
                 <h2 class="section-title"><?= e($cassava['title']) ?></h2>
                 <p class="lead"><?= e($cassava['summary']) ?></p>
                 <p class="mantra"><?= icon('sun') ?> Mantra: <strong><?= e($cassava['mantra']) ?></strong></p>
@@ -96,7 +96,7 @@ $maxRevenue = max(array_column($cassava['products'], 'revenue'));
             <img class="rounded-media" src="<?= e(img($hotel['image'])) ?>" alt="Architectural render of the 3-star hotel at Duayaw Nkwanta" loading="lazy" width="930" height="657">
         </div>
         <div class="split-copy reveal">
-            <p class="eyebrow">Unit <?= e($hotel['letter']) ?> · <?= e($hotel['subtitle']) ?></p>
+            <p class="eyebrow"><?= e($hotel['subtitle']) ?></p>
             <h2 class="section-title"><?= e($hotel['title']) ?></h2>
             <p class="lead"><?= e($hotel['summary']) ?></p>
             <div class="phase-grid">
@@ -118,7 +118,7 @@ $maxRevenue = max(array_column($cassava['products'], 'revenue'));
     <div class="hex-field hex-field--faint" aria-hidden="true"></div>
     <div class="container split">
         <div class="split-copy reveal">
-            <p class="eyebrow eyebrow--light">Unit <?= e($newmont['letter']) ?> · <?= e($newmont['subtitle']) ?></p>
+            <p class="eyebrow eyebrow--light"><?= e($newmont['subtitle']) ?></p>
             <h2 class="section-title section-title--light"><?= e($newmont['title']) ?></h2>
             <p class="lead"><?= e($newmont['summary']) ?></p>
             <ul class="checklist checklist--light">
@@ -144,7 +144,7 @@ $maxRevenue = max(array_column($cassava['products'], 'revenue'));
             </div>
         </div>
         <div class="split-copy reveal">
-            <p class="eyebrow">Unit <?= e($fmcg['letter']) ?> · <?= e($fmcg['subtitle']) ?></p>
+            <p class="eyebrow"><?= e($fmcg['subtitle']) ?></p>
             <h2 class="section-title"><?= e($fmcg['title']) ?></h2>
             <p class="lead"><?= e($fmcg['summary']) ?></p>
             <ul class="checklist">

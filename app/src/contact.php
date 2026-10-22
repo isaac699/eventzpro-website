@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 /**
  * Contact form: CSRF token, honeypot, minimum fill time and per-IP rate limit.
- * Valid enquiries are appended to app/storage/messages (never web-accessible)
- * and emailed to MAIL_TO.
+ * Valid enquiries are saved to the database (handled in the admin panel) and
+ * emailed to MAIL_TO. If the database is unavailable they are appended to
+ * app/storage/messages instead, so no enquiry is ever lost.
  */
 
 function contact_topics(): array
@@ -81,8 +82,7 @@ function handle_contact_post(): string
     }
 
     $record = [
-        'id'         => bin2hex(random_bytes(8)),
-        'received'   => date('c'),
+        'reference'  => bin2hex(random_bytes(8)),
         'name'       => $input['name'],
         'email'      => $input['email'],
         'phone'      => $input['phone'],
@@ -91,10 +91,17 @@ function handle_contact_post(): string
         'message'    => $input['message'],
         'ip_hash'    => hash('sha256', client_ip()),
         'user_agent' => substr((string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255),
+        'created_at' => db_now(),
     ];
 
-    store_enquiry($record);
-    send_enquiry_email($record);
+    $id = store_enquiry($record);
+    if (send_enquiry_email($record, $id) && $id !== null) {
+        try {
+            db_query('UPDATE messages SET email_sent = 1 WHERE id = ?', [$id]);
+        } catch (Throwable $e) {
+            error_log('[contact] Could not flag email_sent for ' . $record['reference'] . ': ' . $e->getMessage());
+        }
+    }
 
     // Rotate the token after a successful submission (prevents double posts).
     unset($_SESSION['_csrf']);
@@ -131,45 +138,51 @@ function validate_contact(array $in): array
     return $errors;
 }
 
-function store_enquiry(array $record): void
+/** Save to the database; returns the new id, or null when it had to fall back to a file. */
+function store_enquiry(array $record): ?int
 {
+    try {
+        return db_insert('messages', $record + ['status' => 'new', 'updated_at' => $record['created_at']]);
+    } catch (Throwable $e) {
+        error_log('[contact] Database unavailable, enquiry ' . $record['reference'] . ' saved to file: ' . $e->getMessage());
+    }
     $file = STORAGE_PATH . '/messages/enquiries-' . date('Y-m') . '.jsonl';
     $line = json_encode($record, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . PHP_EOL;
     if (@file_put_contents($file, $line, FILE_APPEND | LOCK_EX) === false) {
-        error_log('[contact] Could not write enquiry ' . $record['id']);
+        error_log('[contact] Could not write enquiry ' . $record['reference']);
     }
+    return null;
 }
 
-function send_enquiry_email(array $r): void
+/** Notify the company inbox. Replying to the email answers the visitor directly. */
+function send_enquiry_email(array $r, ?int $id): bool
 {
-    if (!config('mail.enabled') || !function_exists('mail')) {
-        return;
-    }
-    $to = header_safe((string) config('mail.to'));
-    $from = header_safe((string) config('mail.from'));
-    $subject = 'Website enquiry: ' . header_safe($r['topic']) . ' from ' . header_safe($r['name']);
-
-    $body = "New enquiry from the Eventzpro website\n"
-        . str_repeat('-', 44) . "\n"
-        . "Name:         {$r['name']}\n"
-        . "Email:        {$r['email']}\n"
-        . 'Phone:        ' . ($r['phone'] ?: 'Not provided') . "\n"
-        . 'Organisation: ' . ($r['company'] ?: 'Not provided') . "\n"
-        . "Topic:        {$r['topic']}\n"
-        . "Received:     {$r['received']}\n"
-        . "Reference:    {$r['id']}\n\n"
-        . $r['message'] . "\n";
-
-    $headers = [
-        'From: Eventzpro Website <' . $from . '>',
-        'Reply-To: ' . header_safe($r['email']),
-        'MIME-Version: 1.0',
-        'Content-Type: text/plain; charset=UTF-8',
-        'X-Mailer: Eventzpro-Web',
+    $subject = 'New website enquiry: ' . $r['topic'] . ' from ' . $r['name'];
+    $adminUrl = $id !== null ? absolute_url('admin/messages/' . $id) : null;
+    $fields = [
+        'Name'         => $r['name'],
+        'Email'        => $r['email'],
+        'Phone'        => $r['phone'] ?: 'Not provided',
+        'Organisation' => $r['company'] ?: 'Not provided',
+        'Topic'        => $r['topic'],
+        'Received'     => date('j M Y, H:i', strtotime($r['created_at'])) . ' (Accra)',
+        'Reference'    => $r['reference'],
     ];
 
-    $encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-    if (!@mail($to, $encodedSubject, $body, implode("\r\n", $headers))) {
-        error_log('[contact] mail() failed for enquiry ' . $r['id'] . ' (saved to storage/messages)');
+    $text = "New enquiry from the Eventzpro website\n" . str_repeat('-', 44) . "\n";
+    foreach ($fields as $label => $value) {
+        $text .= str_pad($label . ':', 14) . $value . "\n";
     }
+    $text .= "\n" . $r['message'] . "\n";
+    if ($adminUrl) {
+        $text .= "\nManage this enquiry: {$adminUrl}\n";
+    }
+
+    $html = capture(APP_ROOT . '/views/emails/enquiry.php', ['r' => $r, 'fields' => $fields, 'adminUrl' => $adminUrl]);
+
+    $sent = send_mail((string) config('mail.to'), $subject, $text, $html, $r['email']);
+    if (!$sent && config('mail.enabled')) {
+        error_log('[contact] Notification email failed for enquiry ' . $r['reference'] . ' (it is saved and visible in the admin panel)');
+    }
+    return $sent;
 }

@@ -10,6 +10,7 @@ app/.env
 app/storage/messages/*.jsonl
 app/storage/ratelimit/*.json
 app/storage/logs/*.log
+app/storage/database/*.sqlite*
 public/assets/vendor/**/*.map
 *.md
 Dockerfile

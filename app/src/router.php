@@ -29,6 +29,11 @@ function run(): void
         'privacy'    => 'privacy',
     ];
 
+    if ($path === 'admin' || str_starts_with($path, 'admin/')) {
+        admin_dispatch($method, $path);
+        return;
+    }
+
     if ($path === 'contact') {
         echo $method === 'POST' ? handle_contact_post() : render_contact();
         return;
@@ -73,7 +78,7 @@ function page_meta(string $page): array
         'services'   => ['title' => 'Services', 'description' => 'Organizational development, EPC project management, agribusiness, commodity supply, mining services and oil & gas consultancy from Eventzpro Consult.'],
         'projects'   => ['title' => 'Projects & Clients', 'description' => 'Selected consulting assignments for the World Bank Group, USAID, Eni, WEDDI Africa, Buntaa Farms, Bodukwan, Angel Group and more.'],
         'ventures'   => ['title' => 'Business Units', 'description' => 'Eventzpro\'s own ventures: a green cassava processing SBU, a 3-star hotel in the Ahafo Region, Newmont resettlement contracts and FMCG distribution.'],
-        'leadership' => ['title' => 'Leadership', 'description' => 'Meet the board and leadership of Eventzpro Consult Ltd.'],
+        'leadership' => ['title' => 'Leadership', 'description' => 'Meet the leadership team of Eventzpro Consult Ltd.'],
         'privacy'    => ['title' => 'Privacy Notice', 'description' => 'How Eventzpro Consult Ltd. handles information submitted through this website.'],
     ][$page] ?? [];
 }

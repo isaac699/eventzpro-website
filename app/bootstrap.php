@@ -12,7 +12,10 @@ load_env(APP_ROOT . '/.env');
 
 require APP_ROOT . '/src/helpers.php';
 require APP_ROOT . '/src/security.php';
+require APP_ROOT . '/src/db.php';
+require APP_ROOT . '/src/mailer.php';
 require APP_ROOT . '/src/contact.php';
+require APP_ROOT . '/src/admin.php';
 require APP_ROOT . '/src/router.php';
 
 date_default_timezone_set((string) config('timezone'));

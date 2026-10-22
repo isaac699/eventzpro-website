@@ -3,6 +3,7 @@ app/.env
 app/storage/messages/*
 app/storage/ratelimit/*
 app/storage/logs/*
+app/storage/database/*
 !app/storage/**/.gitignore
 
 # Dependencies & build output (Bootstrap is committed in public/assets/vendor)

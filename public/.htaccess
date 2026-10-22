@@ -16,7 +16,7 @@ DirectoryIndex index.php
 
     # Block dotfiles (except .well-known) and backup/source files
     RewriteRule (^|/)\.(?!well-known/) - [F,L]
-    RewriteRule \.(bak|old|orig|sql|log|ini|sh|env|md|lock|json\.dist)$ - [F,NC,L]
+    RewriteRule \.(bak|old|orig|sql|sqlite|db|log|ini|sh|env|md|lock|json\.dist)$ - [F,NC,L]
 
     # Front controller
     RewriteCond %{REQUEST_FILENAME} !-f

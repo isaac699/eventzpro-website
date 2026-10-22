@@ -17,7 +17,7 @@ WORKDIR /var/www/site
 # The site itself (.env, node_modules and source material are excluded by .dockerignore).
 # Bootstrap is already vendored in public/assets/vendor, so no npm build is needed.
 COPY . .
-RUN mkdir -p app/storage/messages app/storage/ratelimit app/storage/logs \
+RUN mkdir -p app/storage/messages app/storage/ratelimit app/storage/logs app/storage/database \
  && chown -R www-data:www-data app/storage
 
 COPY docker/start.sh /usr/local/bin/start-site
